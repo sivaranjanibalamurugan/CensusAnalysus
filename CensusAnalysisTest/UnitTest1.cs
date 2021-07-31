@@ -53,6 +53,54 @@ namespace CensusAnalysisTest
                     Assert.AreEqual("File Not Found", ce.Message);
                 }
             }
+            //TC 1.3
+            //Given the invalid file it returns invalid file type exception
+            [TestCategory("StateCensusAnalyser")]
+            [TestMethod]
+            public void GivenInvalidFile()
+            {
+                try
+                {
+                    var stateRecor = adapter.GetCensusData(wrongFileType, "State,Population,AreaInSqKm,DensityPerSqKm");
+
+                }
+                catch (CensusAnalyserException ce)
+                {
+                    Assert.AreEqual("Invalid File Type", ce.Message);
+                }
+            }
+            //TC 1.4
+            //Given the file with in valid delimeter
+            [TestCategory("StateCensusAnalyser")]
+            [TestMethod]
+            public void GivenInvalidDelimeter()
+            {
+                try
+                {
+                    var stateRecor = adapter.GetCensusData(invalidDelimeter, "State,Population,AreaInSqKm,DensityPerSqKm");
+
+                }
+                catch (CensusAnalyserException ce)
+                {
+                    Assert.AreEqual("File contains invalid Delimiter", ce.Message);
+                }
+            }
+            //TC 1.5
+            //when passing the incorrect header
+            [TestCategory("StateCensusAnalyser")]
+            [TestMethod]
+            public void GivenIncorrectHeader()
+            {
+                try
+                {
+                    var stateRecor = adapter.GetCensusData(invalidDelimeter, "State,Population,Area,DensityPerSqKm");
+
+                }
+                catch (CensusAnalyserException ce)
+                {
+                    Assert.AreEqual("Data header in not matched", ce.Message);
+                }
+            }
 
         }
     }
