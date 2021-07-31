@@ -101,7 +101,34 @@ namespace CensusAnalysisTest
                     Assert.AreEqual("Data header in not matched", ce.Message);
                 }
             }
+            //TC2.1
+            //Giving correct path it should return total count of the census list
+            [TestCategory("StateCodeAnalser")]
+            [TestMethod]
+            public void GivenStateCensusReturnTotalRecordForStateCode()
+            {
+                stateRecord = adapter.GetCensusData(stateCodePath, "SrNo,State,TIN,StateCode");
+                int actual = stateRecord.Length - 1;
+                int expected = 37;
+                //assertion
+                Assert.AreEqual(actual, expected);
+            }
+        }
+        //TC 2.2
+        //Given the incorrect path return file not exist
+        [TestCategory("StateCode")]
+        [TestMethod]
+        public void GivenIncorrectPathForStateCode()
+        {
+            try
+            {
+                var stateRecor = adapter.GetCensusData(wrongPath, "SrNo,State,TIN,StateCode");
 
+            }
+            catch (CensusAnalyserException ce)
+            {
+                Assert.AreEqual("File Not Found", ce.Message);
+            }
         }
     }
 }
